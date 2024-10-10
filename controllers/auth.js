@@ -1,4 +1,5 @@
 const authModel = require('../models/authModel')
+const jwt = require('jsonwebtoken');
 
 async function login (req, reply) {
   const { username, password } = req.body;
@@ -16,7 +17,14 @@ async function login (req, reply) {
   }
 
   // Step 3: Generate JWT token
-  const token = req.server.jwt.sign({ id: user.id, username: user.username });
+  //const token = req.server.jwt.sign({ id: user.id, username: user.username });
+
+  // If login is successful, sign a JWT token with an expiry
+  const token = jwt.sign(
+    { id: user.id, username: user.username }, 
+    process.env.SECRET_KEY, // Use your secret key
+    { expiresIn: '1m' }     // Token expires in 1 hour
+  );
 
   // Step 4: Send token back to the client
   return reply.send({ token });
