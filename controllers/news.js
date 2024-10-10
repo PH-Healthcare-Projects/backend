@@ -35,8 +35,29 @@ async function getNewsDetail (request, reply) {
     }
 }
 
+async function addNewUser (req, res) {
+    
+  const { name, email, password } = req.body;
+    // Basic validation (you can expand this as needed)
+    if (!name || !email || !password) {
+      return 4;//res.status(400).json({ success: false, message: 'All fields are required' });
+    }
+
+    try {
+      const userId = await newsModel.insertUser({ name, email, password });
+      if (userId) {
+        return 1;//res.status(201).json({ success: true, id: userId });
+      } else {
+        return 2;//res.status(500).json({ success: false, message: 'Failed to insert user' });
+      }
+    } catch (error) {
+      console.error(error);
+      return 3;//res.status(500).json({ success: false, message: 'Internal Server Error' });
+    }
+}
 
 module.exports = {
     getNewsList,
-    getNewsDetail
+    getNewsDetail,
+    addNewUser
 };

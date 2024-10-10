@@ -1,4 +1,5 @@
 let news = require('../controllers/news');
+let auth = require('../controllers/auth');
 
 async function routes (fastify, options) {
 
@@ -8,6 +9,9 @@ async function routes (fastify, options) {
 
     fastify.get('/news', news.getNewsList);
     fastify.get('/news/:id', news.getNewsDetail);
+    fastify.post('/users', news.addNewUser);    
+    fastify.post('/login', auth.login);
+    fastify.post('/register', auth.register);
 
 }
 
