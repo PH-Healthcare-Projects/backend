@@ -23,11 +23,19 @@ async function login (req, reply) {
   const token = jwt.sign(
     { id: user.id, username: user.username }, 
     process.env.SECRET_KEY, // Use your secret key
-    { expiresIn: '1m' }     // Token expires in 1 hour
+    { expiresIn: '30m' }     // Token expires in 1 hour
   );
 
+  // Create Refresh Token (expires in 7 days)
+  const refreshToken = jwt.sign(
+    { id: user.id, username: user.username }, 
+    process.env.JWT_REFRESH_SECRET,  // You need another secret for refresh tokens
+    { expiresIn: '7d' }   // Longer lifespan
+  );
+
+
   // Step 4: Send token back to the client
-  return reply.send({ token });
+  return reply.send({ token, refreshToken });
 }
 
 async function register (req, reply) {
@@ -52,7 +60,32 @@ async function register (req, reply) {
   return reply.status(201).send({ message: 'User registered successfully', userId: newUserId });
 }
 
+async function refreshToken (request, reply) {
+  const { refreshToken } = request.body;  // Get refresh token from request body
+
+  if (!refreshToken) {
+    return reply.code(401).send({ message: 'Refresh token required' });
+  }
+
+  try {
+    // Verify the refresh token with the refresh token secret
+    const userData = jwt.verify(refreshToken, process.env.JWT_REFRESH_SECRET);
+
+    // Generate a new access token (expires in 15 minutes)
+    const newAccessToken = jwt.sign(
+      { id: userData.id, username: userData.username }, 
+      process.env.SECRET_KEY, 
+      { expiresIn: '15m' }
+    );
+
+    return reply.send({ accessToken: newAccessToken });
+  } catch (err) {
+    return reply.code(401).send({ message: 'Invalid refresh token' });
+  }
+}
+
 module.exports = {
     login,
-    register
+    register,
+    refreshToken
 };

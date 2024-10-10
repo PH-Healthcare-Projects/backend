@@ -24,7 +24,8 @@ async function routes(fastify, options) {
 
     // Public routes
     fastify.post('/login', auth.login);
-    fastify.post('/register', auth.register);
+    fastify.post('/register', auth.register);    
+    fastify.post('/refresh-token', auth.refreshToken);  // Add this
 
     // Group protected routes
     fastify.register(async function (protectedRoutes) {
