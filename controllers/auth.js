@@ -20,7 +20,7 @@ async function login (req, reply) {
   //const token = req.server.jwt.sign({ id: user.id, username: user.username });
 
   // If login is successful, sign a JWT token with an expiry
-  const token = jwt.sign(
+  const api_token	 = jwt.sign(
     { id: user.id, username: user.username }, 
     process.env.SECRET_KEY, // Use your secret key
     { expiresIn: '30m' }     // Token expires in 1 hour
@@ -35,7 +35,7 @@ async function login (req, reply) {
 
 
   // Step 4: Send token back to the client
-  return reply.send({ token, refreshToken });
+  return reply.send({ api_token	, refreshToken });
 }
 
 async function register (req, reply) {
@@ -75,7 +75,7 @@ async function refreshToken (request, reply) {
     const newAccessToken = jwt.sign(
       { id: userData.id, username: userData.username }, 
       process.env.SECRET_KEY, 
-      { expiresIn: '15m' }
+      { expiresIn: '30m' }
     );
 
     return reply.send({ accessToken: newAccessToken });

@@ -1,12 +1,10 @@
-const fastify = require('fastify')()
+/* const fastify = require('fastify')()
 const routes = require('./routes')
 
-// Register JWT plugin
 fastify.register(require('fastify-jwt'), {
-    secret: process.env.SECRET_KEY, // Use an environment variable for this in production!
+    secret: process.env.SECRET_KEY,
 });
 
-// JWT Authentication Hook
 fastify.decorate("authenticate", async function (request, reply) {
     try {
         await request.jwtVerify();
@@ -17,4 +15,42 @@ fastify.decorate("authenticate", async function (request, reply) {
 
 fastify.register(routes);
 
-module.exports = fastify
+module.exports = fastify */
+
+const fastify = require('fastify')();
+const routes = require('./routes');
+const cors = require('fastify-cors');
+
+
+// Register CORS plugin
+
+fastify.register(cors, {
+    origin: '*',  // Allow all origins
+  });
+// Register JWT plugin
+fastify.register(require('fastify-jwt'), {
+    secret: process.env.SECRET_KEY,
+});
+
+// JWT Authentication Hook
+fastify.decorate("authenticate", async function (request, reply) {
+  try {
+    await request.jwtVerify();
+  } catch (err) {
+    reply.send(err);
+  }
+});
+
+// Register routes
+fastify.register(routes);
+
+// Start the server
+fastify.listen(3000, (err, address) => {
+  if (err) {
+    console.error(err);
+    process.exit(1);
+  }
+  console.log(`Server running on ${address}`);
+});
+
+module.exports = fastify;
