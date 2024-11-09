@@ -28,7 +28,7 @@ async function login (req, reply) {
 
   // Create Refresh Token (expires in 7 days)
   const refreshToken = jwt.sign(
-    { id: user.id, username: user.username }, 
+    { id: user.id, username: user.username,name:user.name }, 
     process.env.JWT_REFRESH_SECRET,  // You need another secret for refresh tokens
     { expiresIn: '7d' }   // Longer lifespan
   );

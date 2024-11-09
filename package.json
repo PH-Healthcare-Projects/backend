@@ -25,6 +25,7 @@
     "fastify-cors": "^6.1.0",
     "fastify-jwt": "^4.2.0",
     "jsonwebtoken": "^9.0.2",
-    "mysql2": "^2.1.0"
+    "mysql2": "^2.1.0",
+    "sequelize": "^6.37.5"
   }
 }
