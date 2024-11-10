@@ -39,7 +39,7 @@ async function routes(fastify, options) {
         protectedRoutes.post('/users', news.addNewUser);
 
 
-        protectedRoutes.post('/model1', model1Controller.createModel1);
+        protectedRoutes.post('/model1_feedback', model1Controller.createModel1);
         protectedRoutes.get('/model1', model1Controller.getAllModel1);
 
         fastify.post('/verify_token', async (request, reply) => {

@@ -1,40 +1,39 @@
-const mysqlPromise = require('../config/database');
 const bcrypt = require('bcrypt');
+const User = require('../models/User'); // Adjust path as needed
 
 const authModel = {
   findByUsername: async (username) => {
-    const connection = await mysqlPromise.DATABASE.getConnection();
     try {
-      const [rows] = await connection.execute('SELECT * FROM users WHERE username = ?', [username]);
-      return rows.length ? rows[0] : null;
+      const user = await User.findOne({ where: { username } });
+      return user ? user.toJSON() : null;
     } catch (err) {
       console.error(err);
       return null;
-    } finally {
-      connection.release();
     }
-  },  
+  },
+
   comparePassword: async (enteredPassword, storedPasswordHash) => {
     return bcrypt.compare(enteredPassword, storedPasswordHash);
   },
+
   registerUser: async (username, hashedPassword, email) => {
-    const connection = await mysqlPromise.DATABASE.getConnection();
     try {
-      const [result] = await connection.execute(
-        'INSERT INTO users (username, password,email) VALUES (?, ?, ?)', [username, hashedPassword, email]
-      );
-      return result.insertId; // Return the ID of the newly inserted user
+      const newUser = await User.create({
+        username,
+        password: hashedPassword,
+        email,
+      });
+      return newUser.id; // Return the ID of the newly inserted user
     } catch (err) {
       console.error(err);
       return null;
-    } finally {
-      connection.release();
     }
   },
+
   hashPassword: async (password) => {
     const saltRounds = 10;
     return await bcrypt.hash(password, saltRounds);
   },
-}
+};
 
 module.exports = authModel;
