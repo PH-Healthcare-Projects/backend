@@ -25,7 +25,8 @@ fastify.decorate("authenticate", async function (request, reply) {
 });
 
 // Register routes
-fastify.register(routes);
+//fastify.register(routes);
+fastify.register(routes, { prefix: '/api' });
 
 // Start the server
 //fastify.listen({ host: "192.168.110.115", port: 3000 }, (err, address) => {
