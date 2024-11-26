@@ -3,6 +3,19 @@ let auth = require('../controllers/auth');
 const model1Controller = require('../controllers/model1Controller');
 const authenticate = require('../authMiddleware'); // Import the JWT middleware
 
+/* async function routes (fastify, options) {
+
+    fastify.get('/', function (request, reply) {
+        reply.send({message: 'ping success', code: 200})
+    })
+
+    fastify.get('/news', news.getNewsList);
+    fastify.get('/news/:id', news.getNewsDetail);
+    fastify.post('/users', news.addNewUser);    
+    fastify.post('/login', auth.login);
+    fastify.post('/register', auth.register);
+
+} */
 
 async function routes(fastify, options) {
     // Public route (no authentication required)
@@ -46,8 +59,10 @@ async function routes(fastify, options) {
             } catch (err) {
                 return reply.code(401).send({ valid: false, message: "Invalid or expired token" });
             }
-        }, { prefix: '/api' });
-    }, { prefix: '/api' });
+        /* }, { prefix: '/api' });
+    }, { prefix: '/api' }); */
+});
+});
 }
 
 module.exports = routes;
