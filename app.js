@@ -29,7 +29,8 @@ fastify.register(routes);
 
 // Start the server
 //fastify.listen({ host: "192.168.110.115", port: 3000 }, (err, address) => {
-fastify.listen(3000, (err, address) => {
+//fastify.listen(3000, (err, address) => {
+fastify.listen(3000, '0.0.0.0',(err, address) => {
   if (err) {
     console.error(err);
     process.exit(1);
