@@ -1,43 +1,31 @@
-// models/model1.js
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/database'); // Assuming your sequelize instance is in config/database
 
-const Model1 = sequelize.define('Model1', {
+const Model1FB = sequelize.define('Model1FB', {
   id: {
     type: DataTypes.INTEGER,
     autoIncrement: true,
     primaryKey: true
   },
-  created_by: {
+  model1_id: {
     type: DataTypes.INTEGER,
     allowNull: false
   },
-  created_dt: {
-    type: DataTypes.DATE,
-    defaultValue: DataTypes.NOW,
-  },
-  cc: {
-    type: DataTypes.STRING,
-  },
-  age: {
-    type: DataTypes.INTEGER,
-    allowNull: true
-  },
-  hoi: {
+  icd10: {
     type: DataTypes.TEXT,
     allowNull: true
   },
-  user: {
+  feedback: {
     type: DataTypes.STRING,
     allowNull: true
   },
-  full_response: {
+  missing: {
     type: DataTypes.TEXT,
     allowNull: true
   },
 }, {
     timestamps: false,  
-    tableName: 'model1' // Specify custom table name here
+    tableName: 'model1_feedback' // Specify custom table name here
   });
 
-module.exports = Model1;
+module.exports = Model1FB;
