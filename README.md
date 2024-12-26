@@ -32,6 +32,3 @@ F. Access Your Application
     DB_PORT=3306
 ```
 3. node server.js
-
-## Read Detail Article
-https://omadijaya.id/nodejs-simple-rest-api-with-fastify-and-mysql/
