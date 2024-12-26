@@ -4,25 +4,25 @@
 1. npm install
 2. create .env file
 ```
-1. Start XAMPP Services
+A. Start XAMPP Services
     Open the XAMPP Control Panel.
     Start both Apache and MySQL modules.
-2. Access phpMyAdmin
+B. Access phpMyAdmin
     Open your browser and go to http://localhost/phpmyadmin/
     http://localhost/phpmyadmin/
-3. Create a New Database
+C. Create a New Database
     Click on the "Databases" tab.
     Enter the name of your database (e.g., test_db).
     Click "Create".
-4. Import the Database
+D. Import the Database
     Select the database you just created from the left sidebar.
     Click on the "Import" tab.
     Click "Choose File" and select your SQL file (e.g., database.sql) from your computer.
     Scroll down and click "Go" to start the import.
-5. Verify the Import
+E. Verify the Import
     Once the process completes, check for any errors.
     If successful, you’ll see the imported tables listed under the database.
-6. Access Your Application
+F. Access Your Application
     ensure your .env file has the correct database credentials:
     SERVER_PORT=3000
     DB_HOST=localhost
